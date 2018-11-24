@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Time\.Rider2018.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Time\.Rider2018.2\system\resharper-host\Local\Transient\ReSharperHost\v182\SolutionCaches\_Racanoid.1458526745.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Time\Desktop\Racanoid\Racanoid" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Core" t="Include">
+          <e p="AState.cs" t="Include" />
+          <e p="DecorateFoldout" t="Include">
+            <e p="Attributes" t="Include">
+              <e p="FoldAttribute.cs" t="Include" />
+            </e>
+            <e p="Editor" t="Include">
+              <e p="EditorOverride.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Pool" t="Include">
+            <e p="IComponent.cs" t="Include" />
+            <e p="IPoollable.cs" t="Include" />
+            <e p="Pool.cs" t="Include" />
+            <e p="PoolManager.cs" t="Include" />
+          </e>
+          <e p="SystemProcessings" t="Include">
+            <e p="BaseSystems.cs" t="Include" />
+            <e p="DefaultProcessing" t="Include">
+              <e p="ProcessingEvent.cs" t="Include" />
+              <e p="ProcessingTimer.cs" t="Include" />
+            </e>
+            <e p="IAwake.cs" t="Include" />
+            <e p="IFixTIck.cs" t="Include" />
+            <e p="IReceive.cs" t="Include" />
+            <e p="ITick.cs" t="Include" />
+            <e p="SystemProcessings.cs" t="Include" />
+          </e>
+          <e p="Tools" t="Include">
+            <e p="ButtonHandler.cs" t="Include" />
+            <e p="EventManager.cs" t="Include" />
+            <e p="ManagerView.cs" t="Include" />
+            <e p="RangeInt.cs" t="Include" />
+            <e p="Singleton.cs" t="Include" />
+            <e p="SingltoonBehavior.cs" t="Include" />
+            <e p="Timer.cs" t="Include" />
+            <e p="Tools.cs" t="Include" />
+            <e p="ToolsMove.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="BaseGameManager.cs" t="Include" />
+          <e p="Components" t="Include">
+            <e p="ComponentDirection.cs" t="Include" />
+            <e p="ComponentInput.cs" t="Include" />
+            <e p="Enemy.cs" t="Include" />
+            <e p="EventCollision.cs" t="Include" />
+            <e p="EventDestroy.cs" t="Include" />
+            <e p="SettingsGame.cs" t="Include" />
+          </e>
+          <e p="GameManager.cs" t="Include" />
+          <e p="Other" t="Include">
+            <e p="BallMonoBehaviour.cs" t="Include" />
+            <e p="ScriptableEntities.cs" t="Include" />
+          </e>
+          <e p="Systems" t="Include">
+            <e p="MoveEnemy.cs" t="Include" />
+            <e p="SystemCollisions.cs" t="Include" />
+            <e p="SystemDestroy.cs" t="Include" />
+            <e p="SystemInput.cs" t="Include" />
+            <e p="SystemMoveBall.cs" t="Include" />
+            <e p="SystemMovePlayer.cs" t="Include" />
+            <e p="SystemRespawnPlayerAndBall.cs" t="Include" />
+            <e p="SystemsRespawnEnemy.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Racanoid.sln" t="IncludeFlat" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+  </component>
+</project>
