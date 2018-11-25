@@ -32,7 +32,7 @@ public class ButtonHandler : MonoBehaviour {
         }
 
         // Send global event about button preesing
-        EventManager.TriggerEvent("ClickButtons", buttonName, gameObject);
+        //EventManager.TriggerEvent("ClickButtons", buttonName, gameObject);
     }
 
     /// <summary>

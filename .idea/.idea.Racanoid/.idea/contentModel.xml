@@ -37,7 +37,6 @@
           </e>
           <e p="Tools" t="Include">
             <e p="ButtonHandler.cs" t="Include" />
-            <e p="EventManager.cs" t="Include" />
             <e p="ManagerView.cs" t="Include" />
             <e p="RangeInt.cs" t="Include" />
             <e p="Singleton.cs" t="Include" />
@@ -48,24 +47,29 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
-          <e p="BaseGameManager.cs" t="Include" />
           <e p="Components" t="Include">
             <e p="ComponentDirection.cs" t="Include" />
             <e p="ComponentInput.cs" t="Include" />
-            <e p="Enemy.cs" t="Include" />
+            <e p="ComponentMap.cs" t="Include" />
+            <e p="EnemyMonoBehaviour.cs" t="Include" />
             <e p="EventCollision.cs" t="Include" />
             <e p="EventDestroy.cs" t="Include" />
+            <e p="EventGameOver.cs" t="Include" />
+            <e p="InfoPoint.cs" t="Include" />
             <e p="SettingsGame.cs" t="Include" />
           </e>
           <e p="GameManager.cs" t="Include" />
           <e p="Other" t="Include">
             <e p="BallMonoBehaviour.cs" t="Include" />
             <e p="ScriptableEntities.cs" t="Include" />
+            <e p="SpritesScriptable.cs" t="Include" />
           </e>
           <e p="Systems" t="Include">
             <e p="MoveEnemy.cs" t="Include" />
             <e p="SystemCollisions.cs" t="Include" />
-            <e p="SystemDestroy.cs" t="Include" />
+            <e p="SystemDamage.cs" t="Include" />
+            <e p="SystemGameOver.cs" t="Include" />
+            <e p="SystemGenerateMap.cs" t="Include" />
             <e p="SystemInput.cs" t="Include" />
             <e p="SystemMoveBall.cs" t="Include" />
             <e p="SystemMovePlayer.cs" t="Include" />

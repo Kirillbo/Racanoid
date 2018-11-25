@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-public class SystemCollisions : IAwake, IReceive<EventCollision>
+public class SystemRefelction : IAwake, IReceive<EventCollision>
 {
 	private ComponentSettingsGame _settings;
 	private ComponentDirection _directionBall;
@@ -9,7 +9,7 @@ public class SystemCollisions : IAwake, IReceive<EventCollision>
 	
 	public void OnAwake()
 	{
-		ProcessingEvent.Instance.Add(this);
+		EventManager.Instance.Add(this);
 		_directionBall = PoolManager.Instance.Get<ComponentDirection>();
 		_settings = PoolManager.Instance.Get<ComponentSettingsGame>();
 	}
@@ -17,11 +17,8 @@ public class SystemCollisions : IAwake, IReceive<EventCollision>
 	
 	public void HandleSignal(EventCollision arg)
 	{
-		lastFrameVelocity = _settings.SpeedBall * _directionBall.value;
-		
-		var speed = lastFrameVelocity.magnitude;
+		lastFrameVelocity = _settings.SpeedBall * _directionBall.value;		
 		var direction = Vector3.Reflect(lastFrameVelocity.normalized, arg.NormalColliision);
-
 		_directionBall.value = direction;
 	}
 	

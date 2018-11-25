@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd26596126ae5f640928a0130778243c, type: 3}
+  m_Name: SpritesEnemy
+  m_EditorClassIdentifier: 
+  SpritesEnemy:
+  - {fileID: 21300000, guid: 36ea89a0d84aa0a438ff3b91b3e3daf0, type: 3}
+  - {fileID: 21300000, guid: 88db98defaad3b14b8e1bbc50d17d70b, type: 3}
+  - {fileID: 21300000, guid: 0deb13be8f340ca43932ec27eb1c3cb5, type: 3}

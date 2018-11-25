@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class SystemProcessings 
@@ -26,7 +25,6 @@ public class SystemProcessings
             return _data.ContainsKey(typeof(T).GetHashCode());
         }
 
-       
 
         public T Add<T>(Type type = null) where T : new()
         {

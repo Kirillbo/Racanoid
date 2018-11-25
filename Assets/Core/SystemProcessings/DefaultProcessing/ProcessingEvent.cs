@@ -4,9 +4,9 @@ using UnityEngine;
 
 
 	[Serializable]
-	public class ProcessingEvent : Singleton<ProcessingEvent>
+	public class EventManager : Singleton<EventManager>
 	{
-		public static ProcessingEvent Default;
+		public static EventManager Default;
 		public readonly Dictionary<int, List<IRecieve>> signals = new Dictionary<int, List<IRecieve>>();
 
 		#region LOGIC

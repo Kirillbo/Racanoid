@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Tools;
 using Homebrew;
-using TMPro;
 using UnityEngine;
 
 
-public class GameManager : BaseGameManager
+public class GameManager : SingltoonBehavior<GameManager>
 {
 
     public ScriptableEntities Entities;
+    public SpritesScriptable DataSpritesEnemy;
+    
     [Foldout("Settings Game")] public float SpeedPlayer; 
     [Foldout("Settings Game")] public float SpeedMoveEnemy; 
     [Foldout("Settings Game")] public float SpeedMoveBall; 
     
     [HideInInspector] public PoolManager Pool;
-    private AState _activeState;
+    public SystemProcessings Systems; 
 
     
     protected override void Awake()
@@ -23,24 +25,31 @@ public class GameManager : BaseGameManager
         InitPool(Pool);
         
         Systems = new SystemProcessings();
+        InitBaseSystem(Systems);
     }
 
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
         
+        Systems.Add<SystemGenerateMap>();
         Systems.Add<SystemRespawnPlayerAndBall>();
         Systems.Add<SystemsRespawnEnemy>();
         Systems.Add<SystemInput>();
         Systems.Add<SystemMovePlayer>();
         Systems.Add<MoveEnemy>();
         Systems.Add<SystemMoveBall>();
-        Systems.Add<SystemCollisions>();
-        Systems.Add<SystemDestroy>();
+        Systems.Add<SystemRefelction>();
+        Systems.Add<SystemDamage>();
+        Systems.Add<SystemGameOver>();
     }
 
-    
+    void InitBaseSystem(SystemProcessings system)
+    {
+        system.Add<ProcessingTimer>();
+        var eventManager = EventManager.Instance;
+        system.Add(eventManager);
+    }
 
     void InitPool( PoolManager pool)
     {
@@ -52,10 +61,12 @@ public class GameManager : BaseGameManager
 
         pool.AddComponent<ComponentDirection>().value = new Vector2(Random.value, 1);
         pool.AddComponent<ComponentInput>();
+        //pool.AddComponent<>()
+        
         pool.CreatePool(PoolType.Player, 1, Entities.Player);
         pool.CreatePool(PoolType.Enemy, 60, Entities.Enemy);
         pool.CreatePool(PoolType.Ball, 1, Entities.Ball);
-
+    
         
     }
 

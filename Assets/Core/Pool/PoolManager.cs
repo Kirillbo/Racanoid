@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class PoolManager : SingltoonBehavior<PoolManager>
 {
@@ -46,7 +47,16 @@ public class PoolManager : SingltoonBehavior<PoolManager>
         return (T) _dictComponent[key];
     }
 
+    public void AddComponent(object component)
+    {
+        var scriptable = component as ScriptableObject;
+        if (scriptable != null) Object.Instantiate(scriptable);
+        
+    }
 
+    
+    
+    //Get gameObjects 
     public GameObject Get(PoolType id)
     {
         Pool pool;
@@ -60,6 +70,8 @@ public class PoolManager : SingltoonBehavior<PoolManager>
         return null;
     }
         
+    
+    //Get components
     public T Get<T>() where T : class, IComponent
     {
         var key = typeof(T).GetHashCode();
