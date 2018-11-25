@@ -1,7 +1,8 @@
 ﻿
+using System;
 using UnityEngine;
 
-public class SystemsRespawnEnemy : IAwake
+public class SystemsRespawnEnemy : IAwake, IDisposable
 {
 	private PoolManager _pool;
 
@@ -29,5 +30,18 @@ public class SystemsRespawnEnemy : IAwake
 			}
 		}
 		
+	}
+
+	public void Dispose()
+	{
+		var countObject = _pool.GetStack(PoolType.ActiveEnemy).Count;
+
+		for (int i = 0; i < countObject; i++)
+		{
+			var obj = _pool.ReSpawn(PoolType.ActiveEnemy);
+			_pool.DeSpawn(PoolType.Enemy, obj);
+		}
+
+		_pool = null;
 	}
 }

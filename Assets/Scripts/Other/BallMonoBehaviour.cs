@@ -15,6 +15,11 @@ public class BallMonoBehaviour : MonoBehaviour
 			EventDestroy d = new EventDestroy();
 			d.Target = collision.gameObject;
 			EventManager.Instance.Send(d);
+
+			EventUpdateScore score = new EventUpdateScore();
+			score.Value = 1;
+			EventManager.Instance.Send(score);
+
 		}
 		
 		EventCollision col = new EventCollision();

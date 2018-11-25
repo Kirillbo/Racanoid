@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-	[Serializable]
-	public class EventManager : Singleton<EventManager>
+	public class EventManager : Singleton<EventManager>, IDisposable
 	{
-		public static EventManager Default;
+		
 		public readonly Dictionary<int, List<IRecieve>> signals = new Dictionary<int, List<IRecieve>>();
 
 		#region LOGIC
@@ -86,7 +85,7 @@ using UnityEngine;
 			{
 				if (intType.IsGenericType && intType.GetGenericTypeDefinition() == typeof(IReceiveGlobal<>))
 				{
-					Default.Add(reciever, intType.GetGenericArguments()[0]);
+					_instance.Add(reciever, intType.GetGenericArguments()[0]);
 				}
 				else if (intType.IsGenericType && intType.GetGenericTypeDefinition() == typeof(IReceive<>))
 				{
@@ -107,7 +106,7 @@ using UnityEngine;
 			{
 				if (intType.IsGenericType && intType.GetGenericTypeDefinition() == typeof(IReceiveGlobal<>))
 				{
-					Default.Remove(reciever, intType.GetGenericArguments()[0]);
+					_instance.Remove(reciever, intType.GetGenericArguments()[0]);
 				}
 				else if (intType.IsGenericType && intType.GetGenericTypeDefinition() == typeof(IReceive<>))
 				{
@@ -119,6 +118,7 @@ using UnityEngine;
 		public void Dispose()
 		{
 			signals.Clear();
+			_instance = null;
 		}
 
 		#endregion

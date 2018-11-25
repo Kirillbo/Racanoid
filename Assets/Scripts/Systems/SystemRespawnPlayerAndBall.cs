@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class SystemRespawnPlayerAndBall : IAwake
+public class SystemRespawnPlayerAndBall : IAwake, IDisposable
 {
 
 	public void OnAwake()
@@ -14,5 +15,11 @@ public class SystemRespawnPlayerAndBall : IAwake
 		player.position = placeRespawn;
 		ball.position = placeRespawn + Vector2.up;
 		ball.gameObject.SetActive(true);
+	}
+
+
+	public void Dispose()
+	{
+		PoolManager.Instance.Get(PoolType.Ball).gameObject.SetActive(false);
 	}
 }

@@ -26,10 +26,11 @@ public class SystemProcessings
         }
 
 
-        public T Add<T>(Type type = null) where T : new()
+        public T Add<T>() where T : new()
         {
             object o;
-            var hash = type == null ? typeof(T).GetHashCode() : type.GetHashCode();
+            var hash = typeof(T).GetHashCode();
+            
             if (_data.TryGetValue(hash, out o))
             {
                 InitializeObject(o);
@@ -37,7 +38,6 @@ public class SystemProcessings
             }
 
             var created = new T();
-
             InitializeObject(created);
             _data.Add(hash, created);
 
@@ -63,35 +63,29 @@ public class SystemProcessings
             return null;
         }
 
-//        public Type Get(object obj)
-//        {
-//            object needObject;
-//            var key = obj.GetType().GetHashCode();
-//
-//            if (_data.TryGetValue(key, out needObject))
-//            {
-//                return needObject.GetType();
-//            }
-//            
-//            Debug.Log("Object not find");
-//            return null;
-//        }
-        
-        public object Get(Type t)
+        public void Remove<T>()
         {
-            object resolve;
-            _data.TryGetValue(t.GetHashCode(), out resolve);
-            return resolve;
+            var hash = typeof(T).GetHashCode();
+            object o;
+
+            if (_data.TryGetValue(hash, out o))
+            {
+                var disposible = o as IDisposable;
+                if(disposible != null) disposible.Dispose();
+
+                var tickable = o as ITick;
+                if (tickable != null) _listTicks.Remove(tickable);
+
+                var fixTickable = o as IFixTick;
+                if (fixTickable != null) _listFixTicks.Remove(fixTickable);
+
+                _data.Remove(hash);
+                
+            }
+            
+            else Debug.Log("This system is not find");
         }
-
-        public object Get(object obj)
-        {
-            object resolve;
-            _data.TryGetValue(obj.GetType().GetHashCode(), out resolve);
-            return resolve;
-        }
-
-
+ 
         public void FixUpdate()
         {
             if(SystemChange || _listFixTicks.Count == 0) return;
@@ -112,10 +106,7 @@ public class SystemProcessings
             }
         }
 
-        public object Remove(object obj)
-        {
-            return _data.Remove(obj.GetType().GetHashCode());
-        }
+ 
 
         public void InitializeObject(object obj)
         {
@@ -151,6 +142,7 @@ public class SystemProcessings
                 needToBeCleaned.Dispose();
             }
 
+            _listFixTicks.Clear();
             _listTicks.Clear();
             _data.Clear();
 

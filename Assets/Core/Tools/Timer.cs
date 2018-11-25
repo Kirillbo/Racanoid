@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Assets.Scripts.Tools;
 using UnityEngine;
 
@@ -19,10 +20,12 @@ using UnityEngine;
             _curentTime = 0.0f;
         }
 
-        public static void Add(float finishTime, Action method, bool repeat = false)
+        
+        public static Timer Add(float finishTime, Action method, bool repeat = false)
         {
             var timer = new Timer(finishTime, method, repeat);
-            GameManager.Instance.Systems.Get<ProcessingTimer>().Add(timer);
+            GameManager.Instance.GlobalSystems.Get<ProcessingTimer>().Add(timer);
+            return timer;
         }
 
         public void Tick()
@@ -32,7 +35,6 @@ using UnityEngine;
             if (_curentTime > _finishTime)
             {
                 _callback.Invoke();
-               // Debug.Log("Callback name " + _callback.Target);
                 
                 if (_repeat)
                 {
@@ -48,18 +50,18 @@ using UnityEngine;
 
         public void Stop()
         {
-            GameManager.Instance.Systems.Get<ProcessingTimer>().Remove(this);
+            GameManager.Instance.GlobalSystems.Get<ProcessingTimer>().Remove(this);
         }
 
         public void Play()
         {
-            GameManager.Instance.Systems.Get<ProcessingTimer>().Add(this);
+            GameManager.Instance.GlobalSystems.Get<ProcessingTimer>().Add(this);
         }
 
 
-    void Kill()
+    public void Kill()
     {
-        GameManager.Instance.Systems.Get<ProcessingTimer>().Remove(this);
+        GameManager.Instance.GlobalSystems.Get<ProcessingTimer>().Remove(this);
         _callback = null;
     }
 
