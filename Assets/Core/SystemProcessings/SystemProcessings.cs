@@ -44,25 +44,6 @@ public class SystemProcessings
             return created;
         }
 
-        public object Add(object obj)
-        {
-            object needObject;
-            var key = obj.GetType().GetHashCode();
-
-            if (!_data.TryGetValue(key, out needObject))
-            {
-                if (obj is ScriptableObject)
-                {
-                    needObject = MonoBehaviour.Instantiate((ScriptableObject)obj);
-                    _data.Add(key, needObject);
-                    return needObject;
-                }
-            }
-
-            Debug.Log("This Object is instance");
-            return null;
-        }
-
         public void Remove<T>()
         {
             var hash = typeof(T).GetHashCode();
@@ -146,5 +127,6 @@ public class SystemProcessings
             _listTicks.Clear();
             _data.Clear();
 
+            SystemChange = false;
         }
     }

@@ -11,4 +11,9 @@ public class SingltoonBehavior<T> : MonoBehaviour where T : MonoBehaviour
             Instance = this as T;
         }
     }
+
+    private void OnDestroy()
+    {
+        Instance = null;
+    }
 }

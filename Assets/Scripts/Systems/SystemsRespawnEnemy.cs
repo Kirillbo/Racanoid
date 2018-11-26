@@ -41,7 +41,8 @@ public class SystemsRespawnEnemy : IAwake, IDisposable
 			var obj = _pool.ReSpawn(PoolType.ActiveEnemy);
 			_pool.DeSpawn(PoolType.Enemy, obj);
 		}
-
+		
+		_pool.DestroyPool(PoolType.ActiveEnemy);
 		_pool = null;
 	}
 }

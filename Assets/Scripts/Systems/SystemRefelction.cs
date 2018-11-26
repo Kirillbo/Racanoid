@@ -1,7 +1,8 @@
 ﻿
+using System;
 using UnityEngine;
 
-public class SystemRefelction : IAwake, IReceive<EventCollision>
+public class SystemRefelction : IAwake, IReceive<EventCollision>, IDisposable
 {
 	private ComponentSettingsGame _settings;
 	private ComponentDirection _directionBall;
@@ -21,5 +22,9 @@ public class SystemRefelction : IAwake, IReceive<EventCollision>
 		var direction = Vector3.Reflect(lastFrameVelocity.normalized, arg.NormalColliision);
 		_directionBall.value = direction;
 	}
-	
+
+	public void Dispose()
+	{
+		EventManager.Instance.Remove(this);
+	}
 }

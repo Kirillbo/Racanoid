@@ -61,6 +61,7 @@
             <e p="EventDestroy.cs" t="Include" />
             <e p="EventGameOver.cs" t="Include" />
             <e p="EventUpdateScore.cs" t="Include" />
+            <e p="EventWin.cs" t="Include" />
           </e>
           <e p="GameManager.cs" t="Include" />
           <e p="Other" t="Include">
@@ -80,8 +81,9 @@
             <e p="SystemRespawnPlayerAndBall.cs" t="Include" />
             <e p="SystemsRespawnEnemy.cs" t="Include" />
             <e p="SystemUI.cs" t="Include" />
+            <e p="SystemWin.cs" t="Include" />
           </e>
-          <e p="UIManagerr.cs" t="Include" />
+          <e p="UiContainer.cs" t="Include" />
         </e>
       </e>
       <e p="Library" t="ExcludeRecursive" />

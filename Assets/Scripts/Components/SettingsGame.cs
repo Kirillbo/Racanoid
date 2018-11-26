@@ -4,7 +4,7 @@ public class ComponentSettingsGame : IComponent
 {
 
     public float SpeedPlayer;
-    public float SpeedMoveEnemy;
+    public int TimeAttack;
     public float SpeedBall;
-
+    public int Score;
 }

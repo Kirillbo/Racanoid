@@ -1,15 +1,17 @@
 ﻿using System;
 
-public class SystemGameOver : IAwake, IReceive<EventGameOver>, IDisposable {
+public class SystemWin : IAwake, IReceive<EventWin>, IDisposable {
+
 	
 	public void OnAwake()
 	{
 		EventManager.Instance.Add(this);
 	}
 
-	public void HandleSignal(EventGameOver arg)
+	public void HandleSignal(EventWin arg)
 	{
 		GameManager.Instance.Systems.Clear();
+		EventManager.Instance.Dispose();
 	}
 
 	public void Dispose()

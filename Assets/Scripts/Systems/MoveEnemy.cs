@@ -12,7 +12,7 @@ public class MoveEnemy : IAwake, IDisposable
         var pool = PoolManager.Instance;
 
         _blocks = pool.GetStack(PoolType.ActiveEnemy).ToArray();
-        var timeMoveEnemy = pool.Get<ComponentSettingsGame>().SpeedMoveEnemy;
+        var timeMoveEnemy = pool.Get<ComponentSettingsGame>().TimeAttack;
         
         _timer = Timer.Add(timeMoveEnemy, Step, true);
     }

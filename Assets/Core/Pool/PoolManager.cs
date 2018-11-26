@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 public class PoolManager : SingltoonBehavior<PoolManager>
@@ -11,6 +13,7 @@ public class PoolManager : SingltoonBehavior<PoolManager>
     
 	private Dictionary<int, Pool> _dictGameObject = new Dictionary<int, Pool>();
     private Dictionary<int, IComponent> _dictComponent = new Dictionary<int, IComponent>();
+    
     
     
     public Pool CreatePool(PoolType id, int amount, GameObject prefabe, Transform parent = null)
@@ -30,7 +33,19 @@ public class PoolManager : SingltoonBehavior<PoolManager>
         Debug.Log(id + " pool already exist");
         return null;
     }
-    
+
+    public void DestroyPool(PoolType id)
+    {
+        int IntID = (int) id;
+           
+        if(_dictGameObject.ContainsKey(IntID))
+        {
+            _dictGameObject.Remove(IntID);
+            return;
+        }
+
+        Debug.Log(id + " pool already exist");
+    }
     
     public T AddComponent<T>() where T : IComponent,  new()
     {
@@ -43,7 +58,7 @@ public class PoolManager : SingltoonBehavior<PoolManager>
             return needObj;
         }
         
-        Debug.Log("This component is registered");
+        Debug.Log(typeof(T) + " this component is registered");
         return (T) _dictComponent[key];
     }
 
@@ -69,7 +84,15 @@ public class PoolManager : SingltoonBehavior<PoolManager>
         Debug.Log("Pool is not exist");
         return null;
     }
-        
+
+    public void RemoveComponent<T>()
+    {
+        var key = typeof(T).GetHashCode();
+        if (_dictComponent.ContainsKey(key))
+        {
+            _dictComponent.Remove(key);
+        }
+    } 
     
     //Get components
     public T Get<T>() where T : class, IComponent
@@ -144,7 +167,7 @@ public class PoolManager : SingltoonBehavior<PoolManager>
 //        }
 //    }
 #endif
-
+ 
 
     public void DeSpawn(PoolType id, GameObject obj, bool commonTransform = true, bool setActive = false)
     {
@@ -191,6 +214,8 @@ public class PoolManager : SingltoonBehavior<PoolManager>
 //    }
     
     
+    
+    
     /// <summary>
     /// добавить объект к уже существующему пулу
     /// </summary>
@@ -222,7 +247,11 @@ public class PoolManager : SingltoonBehavior<PoolManager>
         }
         else Debug.Log(id + " pool not exist");
     }
+
+
 }
+
+
 
 public enum PoolType
 {

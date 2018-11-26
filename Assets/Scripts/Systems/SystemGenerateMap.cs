@@ -1,7 +1,8 @@
-﻿using Tools;
+﻿using System;
+using Tools;
 using Random = UnityEngine.Random;
 
-public class SystemGenerateMap : IAwake
+public class SystemGenerateMap : IAwake, IDisposable
 {
         
     public void OnAwake()
@@ -52,6 +53,12 @@ public class SystemGenerateMap : IAwake
             } 
         }
         return myMap;
+    }
+
+
+    public void Dispose()
+    {
+
     }
 }
 

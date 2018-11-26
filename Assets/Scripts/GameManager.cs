@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Tools;
 using Homebrew;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public class GameManager : SingltoonBehavior<GameManager>
@@ -8,10 +9,10 @@ public class GameManager : SingltoonBehavior<GameManager>
 
     public ScriptableEntities Entities;
     public SpritesScriptable DataSpritesEnemy;
-    public GameObject Canvas;
+    
     
     [Foldout("Settings Game")] public float SpeedPlayer; 
-    [Foldout("Settings Game")] public float SpeedMoveEnemy; 
+    [Foldout("Settings Game")] public int TimeAttack; 
     [Foldout("Settings Game")] public float SpeedMoveBall; 
     
     [HideInInspector] public PoolManager Pool;
@@ -23,21 +24,20 @@ public class GameManager : SingltoonBehavior<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        Pool = PoolManager.Instance;
+        Tick(false);
+        
         InitPool(Pool);
+        InitBaseSystem(GlobalSystems);
         
         Systems = new SystemProcessings();
-        InitBaseSystem(Systems);
-
-        _tick = false;
     }
 
 
     void Start()
     {        
         Systems.Add<SystemGenerateMap>();
-        Systems.Add<SystemsRespawnEnemy>();
         Systems.Add<SystemRespawnPlayerAndBall>();
+        Systems.Add<SystemsRespawnEnemy>();
         Systems.Add<SystemInput>();
         Systems.Add<SystemMovePlayer>();
         Systems.Add<MoveEnemy>();
@@ -45,23 +45,22 @@ public class GameManager : SingltoonBehavior<GameManager>
         Systems.Add<SystemRefelction>();
         Systems.Add<SystemDamage>();
         Systems.Add<SystemGameOver>();
-        Systems.Add<SystemUI>();
-        
+        Systems.Add<SystemWin>();
     }
 
     void InitBaseSystem(SystemProcessings system)
     {
         GlobalSystems = new SystemProcessings();
         GlobalSystems.Add<ProcessingTimer>();
-        var eventManager = EventManager.Instance;
-        GlobalSystems.Add(eventManager);
+        GlobalSystems.Add<SystemUI>();
     }
 
     void InitPool( PoolManager pool)
     {
+        pool = PoolManager.Instance;
 
         var component = pool.AddComponent<ComponentSettingsGame>();
-        component.SpeedMoveEnemy = SpeedMoveEnemy;
+        component.TimeAttack = TimeAttack;
         component.SpeedPlayer = SpeedPlayer;
         component.SpeedBall = SpeedMoveBall;
 
@@ -79,23 +78,20 @@ public class GameManager : SingltoonBehavior<GameManager>
     {        
         if(_tick)
         Systems.FixUpdate();
+        GlobalSystems.FixUpdate();
     }
 
     void Update () {
         
         if(_tick)
         Systems.Update();
+        GlobalSystems.Update();
     }
 
     public void RestartGenerateMap()
     {
-        Systems.Remove<SystemGenerateMap>();
-        Systems.Remove<SystemsRespawnEnemy>();
-        Systems.Remove<MoveEnemy>();
-
-        Systems.Add<SystemGenerateMap>();
-        Systems.Add<SystemsRespawnEnemy>();
-        Systems.Add<MoveEnemy>();
+       Systems.Clear();
+       Start();
     }
    
     public void Tick(bool val)
