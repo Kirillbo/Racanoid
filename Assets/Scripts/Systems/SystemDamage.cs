@@ -6,7 +6,7 @@ public class SystemDamage : IAwake, IReceive<EventDestroy>, IDisposable {
 
 	public void OnAwake()
 	{
-		EventManager.Instance.Add(this);
+		EventManager.Instance.Add<EventDestroy>(this);
 	}
 
 	public void HandleSignal(EventDestroy arg)
@@ -34,6 +34,6 @@ public class SystemDamage : IAwake, IReceive<EventDestroy>, IDisposable {
 
 	public void Dispose()
 	{
-		EventManager.Instance.Remove(this);
+		EventManager.Instance.Remove<EventDestroy>(this);
 	}
 }

@@ -24,19 +24,20 @@ using UnityEngine;
 			}
 		}
 
-		public void Add<T>(IRecieve recieve)
+		public EventManager Add<T>(IRecieve recieve)
 		{
 			List<IRecieve> cachedSignals;
 			if (signals.TryGetValue(typeof(T).GetHashCode(), out cachedSignals))
 			{
 				cachedSignals.Add(recieve);
-				return;
+				return this;
 			}
 
 			signals.Add(typeof(T).GetHashCode(), new List<IRecieve> {recieve});
+			return this;
 		}
 
-		public void Remove<T>(IRecieve recieve)
+		public EventManager Remove<T>(IRecieve recieve)
 		{
 			List<IRecieve> cachedSignals;
 			Timer.Add(Time.deltaTime, () =>
@@ -44,8 +45,11 @@ using UnityEngine;
 				if (signals.TryGetValue(typeof(T).GetHashCode(), out cachedSignals))
 				{
 					cachedSignals.Remove(recieve);
+					
 				}
 			});
+
+			return this;
 		}
 
 
@@ -73,47 +77,6 @@ using UnityEngine;
 			});
 		}
 
-
-		public void Add(object obj)
-		{
-			var reciever = obj as IRecieve;
-			if (reciever == null) return;
-       
-			var all = obj.GetType().GetInterfaces();
-
-			foreach (var intType in all)
-			{
-				if (intType.IsGenericType && intType.GetGenericTypeDefinition() == typeof(IReceiveGlobal<>))
-				{
-					_instance.Add(reciever, intType.GetGenericArguments()[0]);
-				}
-				else if (intType.IsGenericType && intType.GetGenericTypeDefinition() == typeof(IReceive<>))
-				{
-			 
-				 
-					Add(reciever, intType.GetGenericArguments()[0]);
-				}
-			}
-		}
-
-		public void Remove(object obj)
-		{
-			var reciever = obj as IRecieve;
-			if (reciever == null) return;
-			var all = obj.GetType().GetInterfaces();
-
-			foreach (Type intType in all)
-			{
-				if (intType.IsGenericType && intType.GetGenericTypeDefinition() == typeof(IReceiveGlobal<>))
-				{
-					_instance.Remove(reciever, intType.GetGenericArguments()[0]);
-				}
-				else if (intType.IsGenericType && intType.GetGenericTypeDefinition() == typeof(IReceive<>))
-				{
-					Remove(reciever, intType.GetGenericArguments()[0]);
-				}
-			}
-		}
 
 		public void Dispose()
 		{

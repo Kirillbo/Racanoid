@@ -34,7 +34,8 @@ public class GameManager : SingltoonBehavior<GameManager>
 
 
     void Start()
-    {        
+    {                
+
         Systems.Add<SystemGenerateMap>();
         Systems.Add<SystemRespawnPlayerAndBall>();
         Systems.Add<SystemsRespawnEnemy>();
@@ -46,8 +47,9 @@ public class GameManager : SingltoonBehavior<GameManager>
         Systems.Add<SystemDamage>();
         Systems.Add<SystemGameOver>();
         Systems.Add<SystemWin>();
+        
     }
-
+ 
     void InitBaseSystem(SystemProcessings system)
     {
         GlobalSystems = new SystemProcessings();
@@ -97,5 +99,10 @@ public class GameManager : SingltoonBehavior<GameManager>
     public void Tick(bool val)
     {
         _tick = val;
+    }
+
+    private void OnDestroy()
+    {
+        GlobalSystems.Clear();
     }
 }

@@ -4,7 +4,7 @@ public class SystemGameOver : IAwake, IReceive<EventGameOver>, IDisposable {
 	
 	public void OnAwake()
 	{
-		EventManager.Instance.Add(this);
+		EventManager.Instance.Add<EventGameOver>(this);
 	}
 
 	public void HandleSignal(EventGameOver arg)
@@ -14,6 +14,6 @@ public class SystemGameOver : IAwake, IReceive<EventGameOver>, IDisposable {
 
 	public void Dispose()
 	{
-		EventManager.Instance.Remove(this);
+		EventManager.Instance.Remove<EventGameOver>(this);
 	}
 }

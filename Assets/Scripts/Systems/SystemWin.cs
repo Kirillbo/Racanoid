@@ -5,17 +5,16 @@ public class SystemWin : IAwake, IReceive<EventWin>, IDisposable {
 	
 	public void OnAwake()
 	{
-		EventManager.Instance.Add(this);
+		EventManager.Instance.Add<EventWin>(this);
 	}
 
 	public void HandleSignal(EventWin arg)
 	{
 		GameManager.Instance.Systems.Clear();
-		EventManager.Instance.Dispose();
 	}
 
 	public void Dispose()
 	{
-		EventManager.Instance.Remove(this);
+		EventManager.Instance.Remove<EventWin>(this);
 	}
 }

@@ -1,28 +1,38 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 
-public class SystemUI : IAwake ,  IReceive<EventButtonClick>, IReceive<EventGameOver>, IReceive<EventUpdateScore>, IReceive<EventWin>
+public class SystemUI : IAwake ,  IReceive<EventButtonClick>, IReceive<EventGameOver>, IReceive<EventUpdateScore>, IReceive<EventWin>, IDisposable
 {
 	
 	private int _currentScore;
 	private int _timeAttack;
 
 	private UiContainer _mainCanvas;
-	
+	private GameObject _startPanel;
+	private GameObject _gamePanel;
+	private GameObject _losePanel;
+	private GameObject _winPanel;
+	private Text _scoreFieldEndPanel;
+	private Text _scoreField;
+	private Text _timeAttackField;
+
 	public void OnAwake()
 	{
-		EventManager.Instance.Add(this);
-		_mainCanvas = Object.FindObjectOfType<UiContainer>();
 		
-//		_startPanel = canvas.StartPanel;
-//		_gamePanel = canvas.GamePanel;
-//		_losePanel = canvas.GameOverPanel;
-//		_winPanel = canvas.WinPanel;
-//		_scoreFieldEndPanel = canvas.FieldEndScore;
-//		_scoreField = canvas.FiledScore;
-//		_timeAttackField = canvas.FieldTimeWarp;
+		EventManager.Instance.Add<EventButtonClick>(this).Add<EventGameOver>(this).Add<EventUpdateScore>(this).Add<EventWin>(this);
+		_mainCanvas = Object.Instantiate(GameManager.Instance.Entities.Canvas).GetComponent<UiContainer>();
+		
+		_startPanel = _mainCanvas.StartPanel;
+		_gamePanel = _mainCanvas.GamePanel;
+		_losePanel = _mainCanvas.GameOverPanel;
+		_winPanel = _mainCanvas.WinPanel;
+		_scoreFieldEndPanel = _mainCanvas.FieldEndScore;
+		_scoreField = _mainCanvas.FiledScore;
+		_timeAttackField = _mainCanvas.FieldTimeWarp;
 
 		_timeAttack = PoolManager.Instance.Get<ComponentSettingsGame>().TimeAttack;
 		
@@ -31,13 +41,12 @@ public class SystemUI : IAwake ,  IReceive<EventButtonClick>, IReceive<EventGame
 	}
 
 	
-	//TODO баг, связанный с инициализацией полей Canvas класса UIContainer
 	void UpdateTimeAttack()
 	{
 		_timeAttack--;
-		var mainCanvas = GameObject.FindWithTag("UI").GetComponent<UiContainer>();
-		mainCanvas.FieldTimeWarp.text = _timeAttack.ToString() + " :Time Attack";
-		if (_timeAttack <= 0)
+		
+		_timeAttackField.text = _timeAttack.ToString() + " :Time Attack";
+		if (_timeAttack <= 1)
 		{
 			_timeAttack =  PoolManager.Instance.Get<ComponentSettingsGame>().TimeAttack;
 		}
@@ -46,34 +55,30 @@ public class SystemUI : IAwake ,  IReceive<EventButtonClick>, IReceive<EventGame
 
 	private void StartGame()
 	{
-		var mainCanvas = GameObject.FindWithTag("UI").GetComponent<UiContainer>();
-		mainCanvas.StartPanel.SetActive(false);
-		mainCanvas.GamePanel.SetActive(true);
+	
+		_startPanel.SetActive(false);
+		_gamePanel.SetActive(true);
 	}
 
 
 	void UpdateScore(int val)
 	{
 		_currentScore += val;
-		
-		var mainCanvas = GameObject.FindWithTag("UI").GetComponent<UiContainer>();
-		mainCanvas.FiledScore.text = "Score" + _currentScore.ToString();
+		_scoreField.text = "Score" + _currentScore.ToString();
 	}
 
 
 	void GameOver()
 	{
-		var mainCanvas = GameObject.FindWithTag("UI").GetComponent<UiContainer>();
-		mainCanvas.GameOverPanel.SetActive(true);
-		mainCanvas.GamePanel.SetActive(false);
-		mainCanvas.FieldEndScore.text = _currentScore.ToString();
+		_losePanel.SetActive(true);
+		_gamePanel.SetActive(false);
+		_scoreFieldEndPanel.text = _currentScore.ToString();
 	}
 
 	void Win()
 	{
-		var mainCanvas = GameObject.FindWithTag("UI").GetComponent<UiContainer>();
-		mainCanvas.GamePanel.SetActive(false);
-		mainCanvas.WinPanel.SetActive(true);
+		_gamePanel.SetActive(false);
+		_winPanel.SetActive(true);
 	}
 	
 	//=================== РЕАГИРОВАНИЕ НА РАЗЛИЧНЫЕ EVENTS ===================
@@ -93,7 +98,7 @@ public class SystemUI : IAwake ,  IReceive<EventButtonClick>, IReceive<EventGame
 				break;
 				
 			case "RestartGame":
-				EventManager.Instance.Remove(this);
+				EventManager.Instance.Remove<EventGameOver>(this);
 				SceneManager.LoadScene(0);
 				break;
 		}
@@ -113,6 +118,11 @@ public class SystemUI : IAwake ,  IReceive<EventButtonClick>, IReceive<EventGame
 	public void HandleSignal(EventWin arg)
 	{
 		Win();
+	}
+
+	public void Dispose()
+	{		
+		EventManager.Instance.Dispose();
 	}
 }
 

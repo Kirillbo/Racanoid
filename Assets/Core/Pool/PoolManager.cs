@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
-using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 public class PoolManager : SingltoonBehavior<PoolManager>

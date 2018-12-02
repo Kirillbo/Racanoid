@@ -10,7 +10,7 @@ public class SystemRefelction : IAwake, IReceive<EventCollision>, IDisposable
 	
 	public void OnAwake()
 	{
-		EventManager.Instance.Add(this);
+		EventManager.Instance.Add<EventCollision>(this);
 		_directionBall = PoolManager.Instance.Get<ComponentDirection>();
 		_settings = PoolManager.Instance.Get<ComponentSettingsGame>();
 	}
@@ -25,6 +25,6 @@ public class SystemRefelction : IAwake, IReceive<EventCollision>, IDisposable
 
 	public void Dispose()
 	{
-		EventManager.Instance.Remove(this);
+		EventManager.Instance.Remove<EventCollision>(this);
 	}
 }

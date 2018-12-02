@@ -14,3 +14,4 @@ MonoBehaviour:
   Player: {fileID: 1071102119299506, guid: 113e49f21a1d66e49a7f7d9db4d104d5, type: 2}
   Enemy: {fileID: 1773953289967324, guid: 67735d70ae218fc4a9274ad98259fbc8, type: 2}
   Ball: {fileID: 1536653961520506, guid: 62058d3a24e65ea4eb906fb89983b495, type: 2}
+  Canvas: {fileID: 1533971357162664, guid: 09e00bc366227e148a95db4552f52463, type: 2}
